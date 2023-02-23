@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import classNames from "classnames";
 import "./InterviewerListItem.scss";
 
 
-export default function InterviewerListItem(props) {
+function InterviewerListItem(props) {
 
   const interviewerClass = classNames("interviewers__item", {
     "interviewers__item--selected": props.selected
   });
 
-  //
 
   return (
     <li className={interviewerClass} onClick={props.setInterviewer}>
@@ -22,3 +21,5 @@ export default function InterviewerListItem(props) {
     </li>
   );
 }
+
+export default InterviewerListItem;
