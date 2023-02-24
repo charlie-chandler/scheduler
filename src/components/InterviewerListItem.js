@@ -9,10 +9,8 @@ function InterviewerListItem(props) {
     "interviewers__item--selected": props.selected
   });
 
-  // Some conditional is supposed to go here related to {props.selected && props.name}
-
   return (
-    <li className={interviewerClass} onClick={props.setInterviewer}>
+    <li className={interviewerClass} onClick={() => props.setInterviewer(props.id)}>
       <img
         className="interviewers__item-image"
         src={props.avatar}
