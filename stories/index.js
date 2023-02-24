@@ -11,11 +11,16 @@ import DayList from "components/DayList";
 import InterviewerListItem from "components/InterviewerListItem";
 import InterviewerList from "components/InterviewerList";
 
+
 import Appointment from "components/Appointment/index.js";
 import Header from "components/Appointment/Header";
 import Empty from "components/Appointment/Empty";
 import Show from "components/Appointment/Show";
 import Confirm from "components/Appointment/Confirm";
+import Status from "components/Appointment/Status";
+import Error from "components/Appointment/Error";
+import Form from "components/Appointment/Form";
+
 
 
 //----------------Button
@@ -181,3 +186,26 @@ storiesOf("Button", module)
         onCancel={action("onCancel")}
       />
       )
+      .add("Status", () => <Status
+        message="Deleting"
+        />
+      )
+      .add("Error", () => <Error
+        message="Could not delete appointment"
+        onClose={action("onClose")}
+        />
+      )
+      .add("Create", () => <Form 
+        interviewers={interviewers}
+        onSave={action("onSave")}
+        onCancel={action("onCancel")}
+        />
+        )
+      .add("Edit", () => <Form 
+        student="Charlie Chandler"
+        interviewer={2}
+        interviewers={interviewers}
+        onSave={action("onSave")}
+        onCancel={action("onCancel")}
+        />
+      );
