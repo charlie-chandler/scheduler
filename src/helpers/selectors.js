@@ -28,3 +28,5 @@ export function getAppointmentsForDay(state, day) {
   return selectAppts;
 
 };
+
+export default getAppointmentsForDay;
