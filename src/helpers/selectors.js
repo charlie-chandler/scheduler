@@ -1,6 +1,6 @@
 
-export function getAppointmentsForDay(state, day) {
-  let selectAppts = [];
+function getAppointmentsForDay(state, day) {
+  let apptsForDay = [];
   let targetAppts = null;
 
   //If days data is empty
@@ -22,11 +22,27 @@ export function getAppointmentsForDay(state, day) {
 
   //Push appt info into empty array
   for (let appt of targetAppts) {
-    selectAppts.push(state.appointments[appt]);
+    apptsForDay.push(state.appointments[appt]);
   }
 
-  return selectAppts;
+  return apptsForDay;
 
 };
 
-export default getAppointmentsForDay;
+function getInterview(state, interview) {
+  if (!interview) {
+    return null;
+  }
+  
+  let interviewData = {};
+
+  for (let interviewerId in state.interviewers){
+    if (state.interviewers[interviewerId].id === interview.interviewer) {
+      interviewData.student = interview.student;
+      interviewData.interviewer = state.interviewers[interviewerId];
+    }
+  }
+  return interviewData;
+}
+
+export { getAppointmentsForDay, getInterview };
