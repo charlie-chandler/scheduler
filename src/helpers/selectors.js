@@ -1,4 +1,3 @@
-
 function getAppointmentsForDay(state, day) {
   let apptsForDay = [];
   let targetAppts = null;
@@ -29,6 +28,8 @@ function getAppointmentsForDay(state, day) {
 
 };
 
+
+
 function getInterview(state, interview) {
   if (!interview) {
     return null;
@@ -45,4 +46,38 @@ function getInterview(state, interview) {
   return interviewData;
 }
 
-export { getAppointmentsForDay, getInterview };
+
+
+function getInterviewersForDay(state, day) {
+  
+  let interviewersForDay = [];
+  let targetAppts = null;
+
+  //If days data is empty
+  if (state.days.length < 1) {
+    return [];
+  }
+
+  //Match the days
+  for (let element of state.days) {
+    if (element.name === day) {
+      targetAppts = element.appointments;
+    }
+  }
+
+  //If day not not found
+  if (!targetAppts) {
+    return [];
+  }
+
+  //Push appt info into empty array
+  for (let appt of targetAppts) {
+    interviewersForDay.push(state.appointments[appt]);
+  }
+
+  return interviewersForDay;
+
+};
+
+
+export { getAppointmentsForDay, getInterview, getInterviewersForDay };
