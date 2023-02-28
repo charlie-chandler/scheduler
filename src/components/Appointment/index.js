@@ -13,10 +13,14 @@ import Form from './Form';
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+
 const SAVE = "SAVE";
 const DELETE = "DELETE";
 const CONFIRM = "CONFIRM";
 const EDIT = "EDIT";
+
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 
 function Appointment(props) {
@@ -35,9 +39,14 @@ function Appointment(props) {
       student: name,
       interviewer
     };
+
     transition(SAVE);
+    
     props.bookInterview(props.id, interview)
-      .then(() => {transition(SHOW)})
+      .then(() => {transition(SHOW)
+      })
+      .catch(() => {transition(ERROR_SAVE, true)
+      });
   };
 
   function confirmDelete() {
@@ -48,7 +57,9 @@ function Appointment(props) {
       transition(DELETE)
       props.cancelInterview(props.id)
       .then(() => {
-        transition(EMPTY);
+        transition(EMPTY)
+      })
+      .catch(() => {transition(ERROR_DELETE)
       });
   };
   
