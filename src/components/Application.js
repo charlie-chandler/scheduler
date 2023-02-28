@@ -40,7 +40,7 @@ export default function Application(props) {
     //console.log('interview', interview)
     
     function bookInterview(id, interview) {
-      //console.log(id, interview);
+      //console.log('interview', interview);
       //console.log('dailyAppointments', dailyAppointments)
       const appointment = {
         ...state.appointments[id],
