@@ -19,18 +19,16 @@ function Appointment(props) {
   );
 
   function save(name, interviewer) {
-    console.log('id', props.id);
+    console.log('props', props)
 
     const interview = {
       student: name,
       interviewer
     };
     props.bookInterview(props.id, interview)
-    console.log('id', props.id);
-    console.log('interview', interview);
+      .then(() => {transition(SHOW)})
   }
 
-  //console.log(props)
 
   return (
     <article className="appointment">
@@ -41,7 +39,7 @@ function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview.student}
-          interviewer={props.interview.interviewer}
+          interviewer={props.interviewers.find(interviewer => interviewer.id === props.interview.interviewer)}
         />
       )}
 

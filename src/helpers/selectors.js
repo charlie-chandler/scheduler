@@ -49,6 +49,7 @@ function getInterviewersForDay(state, day) {
 
   let targetDay = state.days.find(item => day ===   item.name
   )
+  //console.log('targetDay', targetDay)
 
   //If days data is empty or day not found
   if (state.days.length < 1 || !targetDay) {
@@ -59,7 +60,7 @@ function getInterviewersForDay(state, day) {
   let interviewersForDay = 
     targetDay.interviewers.map(interview => state.interviewers[interview]
     )
-  //console.log('interviewersForDay', interviewersForDay)
+  console.log('interviewersForDay', interviewersForDay)
 
   return interviewersForDay;
 };

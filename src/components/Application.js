@@ -37,9 +37,31 @@ export default function Application(props) {
 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+    console.log('interview', interview)
     
     function bookInterview(id, interview) {
       console.log(id, interview);
+      //console.log('dailyAppointments', dailyAppointments)
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      return axios.put(`/api/appointments/${id}`, {interview})
+      .then((response) => {
+        console.log('response', response)
+        setState({
+          ...state,
+          appointments
+        });
+        return response
+      })
+        .catch(err => {
+          console.log('err', err)
+        })
     }
 
     return <Appointment
