@@ -41,7 +41,7 @@ function Appointment(props) {
     };
 
     transition(SAVE);
-    
+
     props.bookInterview(props.id, interview)
       .then(() => {transition(SHOW)
       })
@@ -54,12 +54,12 @@ function Appointment(props) {
     };
 
   function deleteAppointment() {
-      transition(DELETE)
+      transition(DELETE, true)
       props.cancelInterview(props.id)
       .then(() => {
         transition(EMPTY)
       })
-      .catch(() => {transition(ERROR_DELETE)
+      .catch(() => {transition(ERROR_DELETE, true)
       });
   };
   
