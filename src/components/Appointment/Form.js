@@ -7,7 +7,7 @@ function Form(props) {
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
 
-    console.log('interviewer', interviewer)
+  console.log('interviewer', interviewer)
     
   const reset = function() {
     setStudent("");
@@ -25,7 +25,7 @@ function Form(props) {
         <form autoComplete="off" onSubmit={event => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
-            name={student}
+            value={student}
             type="text"
             placeholder="Enter Student Name"
             onChange={(event) => setStudent(event.target.value)}
