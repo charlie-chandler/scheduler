@@ -12,6 +12,8 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVE = "SAVE";
+const DELETE = "DELETE";
+const CONFIRM = "CONFIRM";
 
 
 function Appointment(props) {
@@ -35,8 +37,10 @@ function Appointment(props) {
       .then(() => {transition(SHOW)})
   }
 
-  //console.log('appointment PROPS', props);
-  
+  function confirmDelete () {
+      transition(CONFIRM)
+    }
+
   return (
     <article className="appointment">
       <Header 
@@ -67,6 +71,8 @@ function Appointment(props) {
       )}
 
       {mode === SAVE && <Status message={"Saving"} />}
+      {mode === DELETE && <Status message={"Deleting"} />}
+
 
     </article>
   )
