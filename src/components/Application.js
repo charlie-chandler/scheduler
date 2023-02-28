@@ -15,6 +15,20 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
+
+  // Example state:
+      // {
+      //   day: "",
+      //   days: [],
+      //   appointments: {
+      //     "1": {
+      //       id: 1,
+      //       time: "12pm",
+      //       interview: null
+      //     }
+      //   },
+      //   interviewers: {}
+      // }
   
   const setDay = day => setState({ ...state, day });
   
@@ -23,15 +37,22 @@ export default function Application(props) {
 
   const schedule = dailyAppointments.map((appointment) => {
     const interview = getInterview(state, appointment.interview);
+    
+    function bookInterview(id, interview) {
+      console.log(id, interview);
+    }
 
     return <Appointment
-      key={appointment.id}
-      interview={interview}
-      interviewers={dailyInterviewers}
-      {...appointment} // we can spread if we want every key in an object to become a prop for this component
+    key={appointment.id}
+    interview={interview}
+    interviewers={dailyInterviewers}
+    {...appointment} // we can spread if we want every key in an object to become a prop for this component
+    bookInterview={bookInterview}
     />
   });
 
+
+// Hook
   useEffect(() => {
     Promise.all([
       axios.get('/api/days'),
@@ -68,7 +89,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        <Appointment key="last" time="5pm" />
+        <Appointment key="last" time="5pm"/>
       </section>
     </main>
   );

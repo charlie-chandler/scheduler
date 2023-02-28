@@ -35,49 +35,34 @@ function getInterview(state, interview) {
     return null;
   }
   
-  let interviewData = {};
+   let interviewData = {
+        student: interview.student,
+        interviewer: state.interviewers[interview.interviewer]
+};
 
-  for (let interviewerId in state.interviewers){
-    if (state.interviewers[interviewerId].id === interview.interviewer) {
-      interviewData.student = interview.student;
-      interviewData.interviewer = state.interviewers[interviewerId];
-    }
-  }
   return interviewData;
 }
 
 
-
 function getInterviewersForDay(state, day) {
-  
-  let interviewersForDay = [];
-  let targetAppts = null;
+  //console.log('state', state)
 
-  //If days data is empty
-  if (state.days.length < 1) {
+  let targetDay = state.days.find(item => day ===   item.name
+  )
+
+  //If days data is empty or day not found
+  if (state.days.length < 1 || !targetDay) {
     return [];
   }
 
-  //Match the days
-  for (let element of state.days) {
-    if (element.name === day) {
-      targetAppts = element.appointments;
-    }
-  }
-
-  //If day not not found
-  if (!targetAppts) {
-    return [];
-  }
-
-  //Push appt info into empty array
-  for (let appt of targetAppts) {
-    interviewersForDay.push(state.appointments[appt]);
-  }
+  //Pull interview data from day item
+  let interviewersForDay = 
+    targetDay.interviewers.map(interview => state.interviewers[interview]
+    )
+  //console.log('interviewersForDay', interviewersForDay)
 
   return interviewersForDay;
-
 };
 
 
-export { getAppointmentsForDay, getInterview, getInterviewersForDay };
+ export { getAppointmentsForDay, getInterview, getInterviewersForDay };
