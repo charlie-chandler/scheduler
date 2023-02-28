@@ -40,7 +40,7 @@ export default function Application(props) {
     //console.log('interview', interview)
     
     function bookInterview(id, interview) {
-      console.log(id, interview);
+      //console.log(id, interview);
       //console.log('dailyAppointments', dailyAppointments)
       const appointment = {
         ...state.appointments[id],
@@ -52,7 +52,6 @@ export default function Application(props) {
       };
       return axios.put(`/api/appointments/${id}`, {interview})
       .then((response) => {
-        console.log('response', response)
         setState({
           ...state,
           appointments
@@ -62,7 +61,31 @@ export default function Application(props) {
         .catch(err => {
           console.log('err', err)
         })
-    }
+    };
+
+    function cancelInterview (id) {
+        const appointment = {
+          ...state.appointments[id],
+          interview: null
+        };
+        const appointments = {
+          ...state.appointments,
+          [id]: appointment
+        };
+        return axios
+          .delete(`/api/appointments/${id}`)
+          .then(() => {
+            setState({
+              ...state,
+              appointments
+            });
+          })
+          .catch(err => {
+            console.log('err', err)
+          });
+      };
+
+      
 
     return <Appointment
     key={appointment.id}
@@ -70,6 +93,7 @@ export default function Application(props) {
     interviewers={dailyInterviewers}
     {...appointment} // we can spread if we want every key in an object to become a prop for this component
     bookInterview={bookInterview}
+    cancelInterview={cancelInterview}
     />
   });
 
@@ -111,7 +135,7 @@ export default function Application(props) {
       </section>
       <section className="schedule">
         {schedule}
-        {/* <Appointment key="last" time="5pm"/> */}
+        <Appointment key="last" time="5pm"/>
       </section>
     </main>
   );
