@@ -64,13 +64,11 @@ function bookInterview(id, interview) {
   
   return axios.put(`/api/appointments/${id}`, {interview})
   .then((response) => {
-    //console.log('response', response)
     setState({
       ...state,
       appointments,
       updatedState
     });
-   // console.log('state', state)
     return response
   })
     .catch(err => {
@@ -113,7 +111,7 @@ function cancelInterview (id) {
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
-      axios.get('api/interviewers')
+      axios.get('/api/interviewers')
     ])
     .then((all) => {
       setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}))
