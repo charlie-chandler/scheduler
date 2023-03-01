@@ -10,11 +10,6 @@ const [state, setState] = useState({
   interviewers: {},
 });
 
-console.log('state', state);
-//appt list with nulls = state.appointments
-//appts array = state.days[apptId - 1].appointments
-//loop through the appts array, and for any key in state.appointments that matches an element in the appts array, check if it's null
-//if it is null, spots +1
 
 function spotsRemaining (state) {
   //Find current day
@@ -38,8 +33,8 @@ function spotsRemaining (state) {
 function updateSpots () {
   const spots = spotsRemaining(state);
   const currentDay = state.days.find(day => day.name === state.day)
-  
-  console.log('currentDay and spots', currentDay, spots)
+  //console.log('currentDay and spots', currentDay, spots)
+
   //Add spots value to currentDay object
   const updatedCurrentDay = {...currentDay, spots};
   const updatedDays = [...state.days]; 
