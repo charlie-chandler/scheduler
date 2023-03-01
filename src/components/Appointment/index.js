@@ -113,7 +113,7 @@ function Appointment(props) {
 
       {mode === CONFIRM && <Confirm 
         message={"Are you sure you want to delete this appointment?"} 
-        onCancel={() => back()}
+        onCancel={back}
         onConfirm={() => deleteAppointment(props.id)}
         />
       }
