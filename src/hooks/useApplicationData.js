@@ -33,7 +33,6 @@ function spotsRemaining (state) {
 function updateSpots () {
   const spots = spotsRemaining(state);
   const currentDay = state.days.find(day => day.name === state.day)
-  //console.log('currentDay and spots', currentDay, spots)
 
   //Add spots value to currentDay object
   const updatedCurrentDay = {...currentDay, spots};
@@ -43,15 +42,16 @@ function updateSpots () {
   const currentDayIndex = updatedDays.findIndex((day) => day.name === state.day);
   updatedDays[currentDayIndex] = updatedCurrentDay;
 
-  const updatedState = {...state, days: updatedDays}
+   const updatedState = {...state, days: updatedDays}
 
   return updatedState
-
 }
 
 //Book Interview
 
 function bookInterview(id, interview) {
+  const updatedState = updateSpots();
+
   const appointment = {
     ...state.appointments[id],
     interview: { ...interview }
@@ -60,14 +60,17 @@ function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
+
   
   return axios.put(`/api/appointments/${id}`, {interview})
   .then((response) => {
-    updateSpots()
+    console.log('response', response)
     setState({
       ...state,
-      appointments
+      appointments,
+      updatedState
     });
+    console.log('state', state)
     return response
   })
     .catch(err => {
@@ -79,6 +82,8 @@ function bookInterview(id, interview) {
 //Cancel Interview
 
 function cancelInterview (id) {
+  const updatedState = updateSpots();
+
     const appointment = {
       ...state.appointments[id],
       interview: null
@@ -87,12 +92,14 @@ function cancelInterview (id) {
       ...state.appointments,
       [id]: appointment
     };
+    
     return axios
       .delete(`/api/appointments/${id}`)
       .then(() => {
         setState({
           ...state,
-          appointments
+          appointments,
+          updatedState
         });
       })
       .catch(err => {
