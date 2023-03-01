@@ -64,7 +64,6 @@ function Appointment(props) {
   };
   
   function editAppointment() {
-      console.log('props.interview:', props.interview)
     transition(EDIT);
   }
 
