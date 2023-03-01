@@ -10,6 +10,50 @@ const [state, setState] = useState({
   interviewers: {},
 });
 
+console.log('state', state);
+//appt list with nulls = state.appointments
+//appts array = state.days[apptId - 1].appointments
+//loop through the appts array, and for any key in state.appointments that matches an element in the appts array, check if it's null
+//if it is null, spots +1
+
+function spotsRemaining (state) {
+  //Find current day
+  const currentDay = state.days.find(day => day.name === state.day)
+
+  //Pull out the appt IDs for that specific day
+  const apptIdArray = currentDay.appointments;
+  const apptList = Object.values(state.appointments);
+
+  //Find null appts from the week's appt list
+  const allNullAppts = apptList.filter(appt => appt.interview === null)
+  
+  //Filter all null appts to show only those on the current day
+  const todayNullAppts = allNullAppts.filter(appt => apptIdArray.includes(appt.id))
+
+  const spots = todayNullAppts.length;
+
+  return spots;
+}
+
+function updateSpots () {
+  const spots = spotsRemaining(state);
+  const currentDay = state.days.find(day => day.name === state.day)
+  
+  console.log('currentDay and spots', currentDay, spots)
+  //Add spots value to currentDay object
+  const updatedCurrentDay = {...currentDay, spots};
+  const updatedDays = [...state.days]; 
+  
+  //Update state 
+  const currentDayIndex = updatedDays.findIndex((day) => day.name === state.day);
+  updatedDays[currentDayIndex] = updatedCurrentDay;
+
+  const updatedState = {...state, days: updatedDays}
+
+  return updatedState
+
+}
+
 //Book Interview
 
 function bookInterview(id, interview) {
@@ -21,8 +65,10 @@ function bookInterview(id, interview) {
     ...state.appointments,
     [id]: appointment
   };
+  
   return axios.put(`/api/appointments/${id}`, {interview})
   .then((response) => {
+    updateSpots()
     setState({
       ...state,
       appointments
@@ -76,6 +122,7 @@ function cancelInterview (id) {
 // Set day state
 
   const setDay = day => setState({ ...state, day });
+  
 
 
   return { state, bookInterview, cancelInterview, setDay}
