@@ -64,13 +64,13 @@ function bookInterview(id, interview) {
   
   return axios.put(`/api/appointments/${id}`, {interview})
   .then((response) => {
-    console.log('response', response)
+    //console.log('response', response)
     setState({
       ...state,
       appointments,
       updatedState
     });
-    console.log('state', state)
+   // console.log('state', state)
     return response
   })
     .catch(err => {
