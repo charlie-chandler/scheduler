@@ -89,7 +89,18 @@ const mockRequests = {
         status: 204,
         statusText: "No content",
       })
+  }),
+
+  delete: jest.fn(url => {
+    const apptId = url.split("/")[3];
+
+    if (url === `/api/appointments/${apptId}`)
+      return Promise.resolve({
+        status: 204,
+        statusText: "Unable to delete",
+      })
   })
+
 }
 
 
