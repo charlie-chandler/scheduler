@@ -13,8 +13,8 @@ function InterviewerList(props) {
       name={interviewer.name}
       avatar={interviewer.avatar}
       selected={interviewer.id === props.value}
-      setInterviewer={props.setInterviewer}   
-    />
+      setInterviewer={props.setInterviewer}
+    />;
   });
 
   return (
@@ -26,7 +26,7 @@ function InterviewerList(props) {
     </section>
 
   );
-}
+};
 
 InterviewerList.propTypes = {
   interviewers: PropTypes.array.isRequired
