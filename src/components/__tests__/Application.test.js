@@ -11,44 +11,55 @@ afterEach(cleanup);
 describe("Application", () => {
 
   it("defaults to Monday and changes the schedule when a new day is selected", async () => {
+    // 1. Render the Application.
     const { getByText } = render(<Application />);
 
+    // 2. Wait until "Monday" is displayed.
     await waitForElement(() => getByText("Monday"))
+
+      // 3. Click Tuesday and check for "Leopold Silvers".
       .then(() => {
         fireEvent.click(getByText("Tuesday"));
         expect(getByText("Leopold Silvers")).toBeInTheDocument();
       });
   });
 
+
+
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+    // 1. Render the Application.
     const { container, debug } = render(<Application />);
 
+    // 2. Wait until the text "Archie Cohen" is displayed.
     await waitForElement(() => getByText(container, "Archie Cohen"));
 
+    // 3. Find first empty appointment.
     const appointments = getAllByTestId(container, "appointment");
     const appointment = appointments[0];
 
+    // 4. Click Add button.
     fireEvent.click(getByAltText(appointment, "Add"));
 
+    // 5. Change name and interviewer.
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
-
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
+    // 6. Save appointment.
     fireEvent.click(getByText(appointment, "Save"));
-
-    // debug();
     expect(getByText(appointment, "Saving")).toBeInTheDocument();
 
+    // 7. Wait to see that new appointment shows up.
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
+    // 8. Checks that spots remaining has decreased by 1.
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    //console.log(prettyDOM(day));
 
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+
   });
 
 
@@ -65,7 +76,6 @@ describe("Application", () => {
     fireEvent.click(queryByAltText(appointment, "Delete"));
 
     // 4 Wait for confirmation message to show up 
-    //console.log(prettyDOM(container));
     await waitForElement(() => getByText(appointment, "Are you sure you want to delete this appointment?"));
 
     // 5. Click "Confirm"
@@ -76,13 +86,11 @@ describe("Application", () => {
 
     // 7. Wait until Add button is displayed
     await waitForElement(() => getByAltText(appointment, "Add"));
-    //console.log(prettyDOM(container));
 
     // 8. Check that DayListItem with the text "Monday" has 2 spots remaining
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    //console.log(prettyDOM(day));
 
     expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
 
@@ -117,13 +125,11 @@ describe("Application", () => {
 
     // 8. Wait until "Lydia Miller-Jones" is displayed
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
-    //console.log(prettyDOM(container));
 
     // 9. Check that DayListItem with the text "Monday" still has 1 spot remaining
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    //console.log(prettyDOM(day));
 
     expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
 
@@ -152,15 +158,15 @@ describe("Application", () => {
       target: { value: "Lydia Miller-Jones" }
     });
 
-    // 6. Select a interviewer
+    // 6. Select a interviewer.
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
 
-    // 7. Click Save
+    // 7. Click Save.
     fireEvent.click(getByText(appointment, "Save"));
 
+    // 8. Wait until Error message displayed.
     await waitForElement(() => getByText(container, "Error"));
 
-    //debug();
     expect(getByText(container, "Error saving")).toBeInTheDocument();
 
   });

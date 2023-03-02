@@ -10,25 +10,30 @@ it("renders without crashing", () => {
   render(<Button />);
 });
 
+
 it("renders its `children` prop as text", () => {
   const { getByText } = render(<Button>Default</Button>);
   expect(getByText("Default")).toBeInTheDocument();
 });
+
 
 it("renders a default button style", () => {
   const { getByText } = render(<Button>Default</Button>);
   expect(getByText("Default")).toHaveClass("button");
 });
 
+
 it("renders a confirm button", () => {
   const { getByText } = render(<Button confirm>Confirm</Button>);
   expect(getByText("Confirm")).toHaveClass("button--confirm");
 });
 
+
 it("renders a danger button", () => {
   const { getByText } = render(<Button danger>Danger</Button>);
   expect(getByText("Danger")).toHaveClass("button--danger");
 });
+
 
 it("renders a clickable button", () => {
   const handleClick = jest.fn();
@@ -43,6 +48,7 @@ it("renders a clickable button", () => {
   expect(handleClick).toHaveBeenCalledTimes(1);
 });
 
+
 it("renders a disabled button", () => {
   const handleClick = jest.fn();
   const { getByText } = render(
@@ -56,4 +62,5 @@ it("renders a disabled button", () => {
   fireEvent.click(button);
 
   expect(handleClick).toHaveBeenCalledTimes(0);
+
 });

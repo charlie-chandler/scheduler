@@ -88,7 +88,7 @@ const mockRequests = {
       return Promise.resolve({
         status: 204,
         statusText: "No content",
-      })
+      });
   }),
 
   delete: jest.fn(url => {
@@ -98,10 +98,10 @@ const mockRequests = {
       return Promise.resolve({
         status: 204,
         statusText: "Unable to delete",
-      })
+      });
   })
 
-}
+};
 
 
 
