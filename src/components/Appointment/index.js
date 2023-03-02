@@ -6,6 +6,7 @@ import Show from "./Show";
 import Empty from "./Empty";
 import Status from './Status';
 import Confirm from './Confirm';
+import Error from './Error';
 
 import "./styles.scss";
 import Form from './Form';
@@ -117,6 +118,10 @@ function Appointment(props) {
         onConfirm={() => deleteAppointment(props.id)}
         />
       }
+
+      {mode === ERROR_SAVE && <Error message={"Error saving"} onClose={back}/>}
+      {mode === ERROR_DELETE && <Error message={"Error deleting"} onClose={back}/>}
+
 
       
     </article>
