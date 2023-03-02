@@ -71,7 +71,7 @@ function bookInterview(id, interview) {
     return response
   })
     .catch(err => {
-      console.log('err', err)
+      throw new Error(err);
     })
 };
 
@@ -101,7 +101,7 @@ function cancelInterview (id) {
         });
       })
       .catch(err => {
-        console.log('err', err)
+        throw new Error(err);
       });
   };
 
