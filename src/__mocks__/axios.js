@@ -53,7 +53,7 @@ const fixtures = {
   }
 };
 
-const mockGetRequest = {
+const mockRequests = {
   defaults: { baseURL: "" },
   get: jest.fn(url => {
     if (url === "/api/days") {
@@ -73,8 +73,6 @@ const mockGetRequest = {
     }
 
     if (url === "/api/interviewers") {
-    console.log('mock is working');
-
       return Promise.resolve({
         status: 200,
         statusText: "OK",
@@ -83,8 +81,17 @@ const mockGetRequest = {
     }
   }),
 
+  put: jest.fn(url => {
+    const apptId = url.split("/")[3];
+
+    if (url === `/api/appointments/${apptId}`)
+      return Promise.resolve({
+        status: 204,
+        statusText: "No content",
+      })
+  })
 }
 
 
 
-export default mockGetRequest;
+export default mockRequests;
