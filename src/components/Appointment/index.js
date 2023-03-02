@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import useVisualMode from 'hooks/useVisualMode';
 
 import Header from "./Header";
@@ -25,12 +25,12 @@ const ERROR_DELETE = "ERROR_DELETE";
 
 
 function Appointment(props) {
-//console.log('props', props)
 
   const { mode, transition, back } = useVisualMode(
     props.interview && props.interview.interviewer ? SHOW : EMPTY
   );
 
+// Save and Book Appointment
   function save(name, interviewer) {
     if (interviewer === null) {
       return;
@@ -42,35 +42,40 @@ function Appointment(props) {
     };
 
     transition(SAVE);
-
+    
     props.bookInterview(props.id, interview)
-      .then(() => {transition(SHOW)
+      .then(() => {
+        transition(SHOW);
       })
-      .catch(() => {transition(ERROR_SAVE, true)
+      .catch(() => {
+        transition(ERROR_SAVE, true);
       });
   };
 
+// Delete and Edit Appointment
   function confirmDelete() {
-      transition(CONFIRM)
-    };
+    transition(CONFIRM);
+  };
 
   function deleteAppointment() {
-      transition(DELETE, true)
-      props.cancelInterview(props.id)
+    transition(DELETE, true);
+    props.cancelInterview(props.id)
       .then(() => {
-        transition(EMPTY)
+        transition(EMPTY);
       })
-      .catch(() => {transition(ERROR_DELETE, true)
+      .catch(() => {
+        transition(ERROR_DELETE, true);
       });
   };
-  
+
   function editAppointment() {
     transition(EDIT);
-  }
+  };
+
 
   return (
     <article className="appointment" data-testid="appointment">
-      <Header 
+      <Header
         time={props.time}
       />
 
@@ -78,7 +83,8 @@ function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interviewers.find(interviewer => {
-          return interviewer.id === props.interview.interviewer}
+            return interviewer.id === props.interview.interviewer;
+            }
           )}
           onDelete={confirmDelete}
           onEdit={editAppointment}
@@ -86,46 +92,44 @@ function Appointment(props) {
       )}
 
       {mode === EMPTY && (
-        <Empty 
+        <Empty
           onAdd={() => transition(CREATE)}
         />
       )}
 
       {mode === CREATE && (
-        <Form 
+        <Form
           interviewers={props.interviewers}
           onSave={save}
-          onCancel={() => back()}
+          onCancel={back}
         />
       )}
 
       {mode === EDIT && (
-        <Form 
+        <Form
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           interviewers={props.interviewers}
           onSave={save}
-          onCancel={() => back()}
+          onCancel={back}
         />
       )}
 
       {mode === SAVE && <Status message={"Saving"} />}
       {mode === DELETE && <Status message={"Deleting"} />}
 
-      {mode === CONFIRM && <Confirm 
-        message={"Are you sure you want to delete this appointment?"} 
+      {mode === CONFIRM && <Confirm
+        message={"Are you sure you want to delete this appointment?"}
         onCancel={back}
         onConfirm={() => deleteAppointment(props.id)}
         />
       }
 
-      {mode === ERROR_SAVE && <Error message={"Error saving"} onClose={back}/>}
-      {mode === ERROR_DELETE && <Error message={"Error deleting"} onClose={back}/>}
+      {mode === ERROR_SAVE && <Error message={"Error saving"} onClose={back} />}
+      {mode === ERROR_DELETE && <Error message={"Error deleting"} onClose={back} />}
 
-
-      
     </article>
-  )
-}
+  );
+};
 
 export default Appointment;

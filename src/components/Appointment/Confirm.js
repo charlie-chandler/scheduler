@@ -12,6 +12,6 @@ function Confirm(props) {
       </section>
     </main>
   );
-}
+};
 
 export default Confirm;
