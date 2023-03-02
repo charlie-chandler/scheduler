@@ -8,8 +8,8 @@ describe("Appointments", () => {
 
   it("should book an interview", () => {
     cy.get("[alt=Add]")
-     .first()
-     .click()
+      .first()
+      .click();
 
     cy.get("[data-testid=student-name-input]").type("Lydia Miller-Jones");
     cy.get("[alt='Sylvia Palmer']").click();
@@ -24,7 +24,7 @@ describe("Appointments", () => {
   it("should edit an interview", () => {
     cy.get("[alt=Edit]")
       .first()
-      .click({force: true})
+      .click({ force: true });
 
     cy.get("[data-testid=student-name-input]").clear();
     cy.get("[data-testid=student-name-input]").type("Lydia Miller-Jones");
@@ -40,7 +40,7 @@ describe("Appointments", () => {
   it("should cancel an interview", () => {
     cy.get("[alt=Delete]")
       .first()
-      .click({force: true})
+      .click({ force: true });
 
     cy.contains("Confirm").click();
 
@@ -48,8 +48,7 @@ describe("Appointments", () => {
     cy.contains("Deleting").should("not.exist");
 
     cy.contains(".appointment__card--show", "Archie Cohen")
-    .should("not.exist");
+      .should("not.exist");
   });
-
 
 });
