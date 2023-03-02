@@ -32,7 +32,6 @@ function spotsRemaining (appointments) {
 
 function updateSpots (appointments) {
   const spots = spotsRemaining(appointments);
-  console.log('spots', spots)
   const currentDay = state.days.find(day => day.name === state.day)
 
   //Add spots value to currentDay object
@@ -44,7 +43,6 @@ function updateSpots (appointments) {
   updatedDays[currentDayIndex] = updatedCurrentDay;
 
    const updatedState = {...state, days: updatedDays}
-   console.log('updatedState', updatedState)
 
   return updatedState
 }

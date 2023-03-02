@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render, cleanup, waitForElement, fireEvent, prettyDOM, getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText } from "@testing-library/react";
+import { render, cleanup, waitForElement, fireEvent, prettyDOM, getByText, getAllByTestId, getByAltText, getByPlaceholderText, queryByText, queryByAltText, getAllByDisplayValue } from "@testing-library/react";
 
 import Application from "components/Application";
 
@@ -88,12 +88,69 @@ describe("Application", () => {
   
 
 
+  it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+   // 1. Render the Application.
+   const { container, debug } = render(<Application />);
+  
+   // 2. Wait until the text "Archie Cohen" is displayed.
+   await waitForElement(() => getByText(container, "Archie Cohen"));
+ 
+   // 3. Click the "Edit" button on the appointment.
+   const appointment = getAllByTestId(container, "appointment").find(appointment => queryByText(appointment, "Archie Cohen"));
+   fireEvent.click(queryByAltText(appointment, "Edit"));
+
+   // 4 Wait for appt form to show up 
+    await waitForElement(() => getAllByDisplayValue(appointment, "Archie Cohen"));
+
+   // 5. Make change
+   fireEvent.change(getAllByTestId(appointment, "student-name-input")[0], {
+    target: { value: "Lydia Miller-Jones" }})
+
+   // 6. Click "Save"
+   fireEvent.click(getByText(appointment, "Save"));
+
+   // 7. Check that "Saving" text shows up
+   expect(getByText(appointment, "Saving")).toBeInTheDocument();
+
+   // 8. Wait until "Lydia Miller-Jones" is displayed
+   await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
+       //console.log(prettyDOM(container));
+    
+   // 9. Check that DayListItem with the text "Monday" still has 1 spot remaining
+   const day = getAllByTestId(container, "day").find(day =>
+     queryByText(day, "Monday")
+   );
+   //console.log(prettyDOM(day));
+
+   expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+
+  })
+
   
 
 
 
 
+   // 1. Render the Application.
 
+   // 2. Wait until the text "Archie Cohen" is displayed.
+ 
+   // 3. Click the "Delete" button on the booked appointment.
+ 
+ 
+   // 4. Check that the confirmation message is shown.
+
+
+   // 5. Click the "Confirm" button on the confirmation.
+
+
+   // 6. Check that the element with the text "Deleting" is displayed.
+
+
+   // 7. Wait until the element with the "Add" button is displayed.
+
+   
+   // 8. Check that the DayListItem with the text "Monday" also has the text "2 spots remaining".
 
 
 
