@@ -25,7 +25,6 @@ function getAppointmentsForDay(state, day) {
   }
 
   return apptsForDay;
-
 };
 
 
@@ -34,20 +33,21 @@ function getInterview(state, interview) {
   if (!interview) {
     return null;
   }
-  
-   let interviewData = {
-        student: interview.student,
-        interviewer: state.interviewers[interview.interviewer]
-};
+
+  let interviewData = {
+    student: interview.student,
+    interviewer: state.interviewers[interview.interviewer]
+  };
 
   return interviewData;
-}
+};
 
 
 function getInterviewersForDay(state, day) {
 
-  let targetDay = state.days.find(item => day ===   item.name
-  )
+  //Find given day
+  let targetDay = state.days.find(item => day === item.name
+  );
 
   //If days data is empty or day not found
   if (state.days.length < 1 || !targetDay) {
@@ -55,12 +55,12 @@ function getInterviewersForDay(state, day) {
   }
 
   //Pull interview data from day item
-  let interviewersForDay = 
+  let interviewersForDay =
     targetDay.interviewers.map(interview => state.interviewers[interview]
-    )
+    );
 
   return interviewersForDay;
 };
 
 
- export { getAppointmentsForDay, getInterview, getInterviewersForDay };
+export { getAppointmentsForDay, getInterview, getInterviewersForDay };
